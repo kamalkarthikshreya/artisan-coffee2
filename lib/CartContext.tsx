@@ -33,11 +33,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem('artisan-cart');
-    if (saved) {
-      setItems(JSON.parse(saved));
-    }
-    setMounted(true);
+    const timer = setTimeout(() => {
+      const saved = localStorage.getItem('artisan-cart');
+      if (saved) {
+        setItems(JSON.parse(saved));
+      }
+      setMounted(true);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // Save to localStorage whenever items change

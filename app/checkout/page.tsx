@@ -67,7 +67,7 @@ export default function CheckoutPage() {
         throw new Error('Failed to create order');
       }
 
-      const order = await response.json();
+      await response.json();
       setMessageType('success');
       setMessage('Order placed successfully!');
       clearCart();
@@ -246,11 +246,10 @@ export default function CheckoutPage() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-lg border ${
-                    messageType === 'success'
+                  className={`p-4 rounded-lg border ${messageType === 'success'
                       ? 'bg-green-900/30 border-green-600 text-green-200'
                       : 'bg-red-900/30 border-red-600 text-red-200'
-                  }`}
+                    }`}
                 >
                   {messageType === 'success' ? '✓' : '✗'} {message}
                 </motion.div>

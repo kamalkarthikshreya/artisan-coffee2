@@ -17,8 +17,8 @@ export default function HeroCanvasAnimation() {
     // Simulated Loading Progress (since video loads in streams)
     useEffect(() => {
         if (videoLoaded) {
-            setLoadProgress(100);
-            return;
+            const timer = setTimeout(() => setLoadProgress(100), 0);
+            return () => clearTimeout(timer);
         }
 
         const interval = setInterval(() => {
