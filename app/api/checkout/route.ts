@@ -11,6 +11,10 @@ export async function POST(req: Request) {
         const body = await req.json();
         const { items, customer } = body;
 
+        // Sanitize customer input (remove trailing spaces common on mobile)
+        if (customer && customer.email) customer.email = customer.email.trim();
+        if (customer && customer.name) customer.name = customer.name.trim();
+
         if (!items || items.length === 0) {
             return NextResponse.json({ error: 'No items in checkout' }, { status: 400 });
         }
@@ -66,7 +70,16 @@ export async function POST(req: Request) {
             await sendEmail({
                 to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER || 'kamalkarthik88615@gmail.com',
                 subject: `🔔 New Order [Merchant]: #${mockOrderId}`,
-                html: `<p>You have received a new order from <strong>${customer.name}</strong>!</p>${emailHtml}`
+                html: `
+                    <div style="background: #fffbf0; border: 2px solid #eab308; padding: 20px; border-radius: 8px; font-family: sans-serif; margin-bottom: 24px;">
+                        <h2 style="color: #854d0e; margin-top: 0;">🔔 New Order Alert</h2>
+                        <p style="font-size: 16px;"><strong>${customer.name}</strong> just placed an order!</p>
+                        <p><strong>Customer Email:</strong> ${customer.email}</p>
+                        <p style="margin-top: 10px; font-size: 14px; color: #713f12;">(Below is a copy of the receipt sent to them)</p>
+                    </div>
+                    <div style="opacity: 0.8; border-top: 1px dashed #ccc; padding-top: 20px;">
+                        ${emailHtml}
+                    </div>`
             });
 
             // Return success URL with detailed mock session to allow verification to pass
