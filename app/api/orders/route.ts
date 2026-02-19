@@ -5,7 +5,7 @@ import { sendEmail, generateOrderConfirmationEmail } from '@/lib/email';
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { items, customerName, email, phone, deliveryAddress, city, postalCode, totalPrice } = body;
+        const { items, customerName, email, deliveryAddress, city, postalCode, totalPrice } = body;
 
         // Validate required fields
         if (!items || !customerName || !email || !deliveryAddress) {
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         const emailHtml = generateOrderConfirmationEmail({
             orderId,
             customerName,
-            items: items.map((i: any) => ({
+            items: items.map((i: { productName?: string; name?: string; quantity: number; price: string | number }) => ({
                 name: i.productName || i.name || 'Coffee',
                 quantity: i.quantity,
                 price: typeof i.price === 'string' ? i.price : `$${i.price}`
