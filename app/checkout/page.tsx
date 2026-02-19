@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCart } from '@/lib/CartContext';
 import Link from 'next/link';
+import CheckoutForm from '@/components/CheckoutForm';
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
@@ -143,129 +144,7 @@ export default function CheckoutPage() {
             animate={{ opacity: 1, x: 0 }}
             className="lg:col-span-2 order-2 lg:order-1"
           >
-            <form onSubmit={handleSubmit} className="space-y-6 bg-[#3D2820] rounded-xl p-8 border border-[#5A4034]">
-              <h2 className="text-2xl font-['Playfair_Display'] font-bold text-[#F5E6D3] mb-6">
-                Delivery Information
-              </h2>
-              {/* Personal Info */}
-              <div>
-                <h3 className="text-lg font-bold text-[#F5E6D3] mb-4">Personal Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    name="customerName"
-                    value={formData.customerName}
-                    onChange={(e) =>
-                      setFormData({ ...formData, customerName: e.target.value })
-                    }
-                    className="px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors"
-                    required
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors"
-                    required
-                  />
-                </div>
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
-                  className="w-full px-4 py-3 mt-4 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors"
-                  required
-                />
-              </div>
-
-              {/* Delivery Info */}
-              <div>
-                <h3 className="text-lg font-bold text-[#F5E6D3] mb-4">Delivery Address</h3>
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="deliveryAddress"
-                  value={formData.deliveryAddress}
-                  onChange={(e) =>
-                    setFormData({ ...formData, deliveryAddress: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors mb-4"
-                  required
-                />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="City"
-                    name="city"
-                    value={formData.city}
-                    onChange={(e) =>
-                      setFormData({ ...formData, city: e.target.value })
-                    }
-                    className="px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Postal Code"
-                    name="postalCode"
-                    value={formData.postalCode}
-                    onChange={(e) =>
-                      setFormData({ ...formData, postalCode: e.target.value })
-                    }
-                    className="px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Special Requests */}
-              <div>
-                <h3 className="text-lg font-bold text-[#F5E6D3] mb-4">Special Requests</h3>
-                <textarea
-                  placeholder="Any special instructions or notes..."
-                  name="notes"
-                  value={formData.notes}
-                  onChange={(e) =>
-                    setFormData({ ...formData, notes: e.target.value })
-                  }
-                  className="w-full px-4 py-3 bg-[#2D1810] border border-[#5A4034] rounded-lg text-[#F5E6D3] placeholder-[#8B7660]/50 focus:outline-none focus:border-[#4F9C8F] transition-colors resize-none h-20"
-                />
-              </div>
-
-              {/* Message */}
-              {message && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-4 rounded-lg border ${messageType === 'success'
-                      ? 'bg-green-900/30 border-green-600 text-green-200'
-                      : 'bg-red-900/30 border-red-600 text-red-200'
-                    }`}
-                >
-                  {messageType === 'success' ? '✓' : '✗'} {message}
-                </motion.div>
-              )}
-
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isLoading}
-                whileHover={{ scale: isLoading ? 1 : 1.02 }}
-                whileTap={{ scale: isLoading ? 1 : 0.98 }}
-                className="w-full py-4 bg-gradient-to-r from-[#4F9C8F] to-[#3D8B7F] text-white font-bold text-lg rounded-lg hover:shadow-2xl hover:shadow-[#4F9C8F]/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? 'Processing...' : `Place Order - $${total.toFixed(2)}`}
-              </motion.button>
-            </form>
+            <CheckoutForm items={items} />
           </motion.div>
         </div>
       </div>
