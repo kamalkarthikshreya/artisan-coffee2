@@ -78,13 +78,13 @@ export function generateOrderConfirmationEmail(data: {
           
           <h2>Order Details:</h2>
           ${data.items
-            .map(
-              item =>
-                `<div class="item">
+      .map(
+        item =>
+          `<div class="item">
                   <strong>${item.name}</strong> x ${item.quantity} = ${item.price}
                 </div>`
-            )
-            .join('')}
+      )
+      .join('')}
           
           <div class="total">Total: $${data.totalPrice.toFixed(2)}</div>
           
@@ -96,7 +96,7 @@ export function generateOrderConfirmationEmail(data: {
           
           <p>You can track your order status anytime by visiting our website.</p>
           
-          <a href="${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/orders/${data.orderId}" class="button">Track Order</a>
+          <a href="${getBaseUrl()}/orders/${data.orderId}" class="button">Track Order</a>
           
           <div class="footer">
             <p>Artisan Coffee Co. | Premium Coffee Delivered Fresh</p>
@@ -106,4 +106,10 @@ export function generateOrderConfirmationEmail(data: {
       </body>
     </html>
   `;
+}
+
+function getBaseUrl() {
+  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  return 'http://localhost:3000';
 }
