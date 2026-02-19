@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import { sendEmail } from '@/lib/email';
+import dbConnect from '@/lib/db';
+import Contact from '@/models/Contact';
 
 export async function POST(req: Request) {
     try {
+        await dbConnect();
         const body = await req.json();
         const { name, email, message } = body;
 
@@ -13,6 +16,9 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
+
+        // Save to Database
+        await Contact.create({ name, email, message });
 
         // Email to Admin
         await sendEmail({
