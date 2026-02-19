@@ -135,7 +135,7 @@ export default function Header() {
               <div className="flex-1 overflow-y-auto space-y-6">
                 {items.length === 0 ? (
                   <div className="text-center text-[#C9B8A0] mt-20">
-                    <ShoppingBag size={48} className="mx-auto mb-4 opacity-50" />
+                    <ShoppingBagIcon size={48} className="mx-auto mb-4 opacity-50" />
                     <p>Your cart is empty</p>
                   </div>
                 ) : (
