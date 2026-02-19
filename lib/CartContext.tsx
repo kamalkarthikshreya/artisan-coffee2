@@ -36,7 +36,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const timer = setTimeout(() => {
       const saved = localStorage.getItem('artisan-cart');
       if (saved) {
-        setItems(JSON.parse(saved));
+        try {
+          const parsed = JSON.parse(saved);
+          // Sanitize: ensure items have valid product data
+          const validItems = Array.isArray(parsed)
+            ? parsed.filter((i: any) => i && i.product && i.product.id)
+            : [];
+          setItems(validItems);
+        } catch (e) {
+          console.error("Failed to parse cart", e);
+          setItems([]);
+        }
       }
       setMounted(true);
     }, 0);
@@ -51,16 +61,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items, mounted]);
 
   const addItem = (product: Product, quantity: number) => {
+    if (!product || !product.id) return;
+
     setItems(prevItems => {
-      const existing = prevItems.find(item => item.product.id === product.id);
+      // Guard against any corrupted items in state
+      const safeItems = prevItems.filter(item => item && item.product && item.product.id);
+
+      const existing = safeItems.find(item => item.product.id === product.id);
       if (existing) {
-        return prevItems.map(item =>
+        return safeItems.map(item =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...prevItems, { product, quantity }];
+      return [...safeItems, { product, quantity }];
     });
   };
 
