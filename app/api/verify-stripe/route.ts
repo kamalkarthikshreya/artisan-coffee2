@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { sendEmail, generateOrderConfirmationEmail } from '@/lib/email';
+import dbConnect from '@/lib/db';
+import Order from '@/models/Order';
 
 export async function POST(req: Request) {
     try {
+        await dbConnect();
         const { sessionId } = await req.json();
 
         if (!sessionId) {
@@ -15,6 +18,8 @@ export async function POST(req: Request) {
             // Extract order ID from session string "mock_ORD-SIM-XXXXXX_TIMESTAMP"
             const parts = sessionId.split('_');
             const mockOrderId = parts[1] || 'ORD-SIM-TEST';
+
+            // In simulation, the order is already saved as 'paid' in checkout/route.ts
             return NextResponse.json({ success: true, orderId: mockOrderId });
         }
 
@@ -33,8 +38,24 @@ export async function POST(req: Request) {
         const address = session.metadata?.address || '';
         const city = session.metadata?.city || '';
         const zip = session.metadata?.zip || '';
-        const orderId = 'ORD-' + sessionId.slice(-8).toUpperCase();
+        const uniqueId = sessionId.slice(-8).toUpperCase();
+        const orderId = 'ORD-' + uniqueId;
         const total = (session.amount_total || 0) / 100;
+
+        // Update Order in MongoDB
+        const updatedOrder = await Order.findOneAndUpdate(
+            { stripeSessionId: sessionId },
+            {
+                status: 'paid',
+                orderId: orderId // Update temporary pending ID to final ID
+            },
+            { new: true }
+        );
+
+        if (!updatedOrder) {
+            console.warn('Order not found in DB for session:', sessionId);
+            // Fallback: Create order if not exists (shouldn't happen with correct flow, but safe)
+        }
 
         // Generate Email
         const emailHtml = generateOrderConfirmationEmail({
