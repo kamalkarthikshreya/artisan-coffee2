@@ -50,11 +50,18 @@ export async function POST(req: Request) {
             estimatedDelivery: '3-5 Business Days'
         });
 
-        // Send Email
+        // Send Email to Customer
         await sendEmail({
             to: email,
             subject: `Order Confirmation #${orderId}`,
             html: emailHtml
+        });
+
+        // Send Email to Merchant
+        await sendEmail({
+            to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER || 'kamalkarthik88615@gmail.com',
+            subject: `🔔 New Order Received: #${orderId}`,
+            html: `<p>You have received a new order from <strong>${customerName}</strong>!</p>${emailHtml}`
         });
 
         return NextResponse.json({ success: true, orderId });

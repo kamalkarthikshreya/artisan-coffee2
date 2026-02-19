@@ -42,6 +42,13 @@ export async function POST(req: Request) {
                 html: emailHtml
             });
 
+            // Notify Merchant
+            await sendEmail({
+                to: process.env.CONTACT_EMAIL || process.env.GMAIL_USER || 'kamalkarthik88615@gmail.com',
+                subject: `🔔 New Order Received: #${mockOrderId}`,
+                html: `<p>You have received a new order from <strong>${customer.name}</strong>!</p>${emailHtml}`
+            });
+
             // Return success URL with detailed mock session to allow verification to pass
             // We append a timestamp to ensure uniqueness
             return NextResponse.json({
