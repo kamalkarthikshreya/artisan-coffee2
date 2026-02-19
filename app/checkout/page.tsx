@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCart } from '@/lib/CartContext';
 import Link from 'next/link';
