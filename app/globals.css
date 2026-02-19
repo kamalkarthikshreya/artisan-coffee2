@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
@@ -22,7 +24,7 @@ body {
   .glass {
     @apply backdrop-blur-md bg-white/20;
   }
-  
+
   .gradient-text {
     @apply bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent;
   }
