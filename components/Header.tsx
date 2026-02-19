@@ -139,32 +139,35 @@ export default function Header() {
                     <p>Your cart is empty</p>
                   </div>
                 ) : (
-                  items.map((item) => (
-                    <div key={item.product.id} className="flex gap-4 p-4 bg-[#3D2820]/50 rounded-lg border border-[#5A4034]/30">
-                      <div className="relative w-20 h-20 bg-[#1A0F0A] rounded-md overflow-hidden flex-shrink-0">
-                        <Image
-                          src={item.product.image}
-                          alt={item.product.name}
-                          fill
-                          className="object-contain p-2"
-                          unoptimized
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-[#F5E6D3]">{item.product.name}</h3>
-                        <p className="text-[#4F9C8F] font-bold">{item.product.price}</p>
-                        <div className="flex justify-between items-center mt-2">
-                          <span className="text-sm text-[#C9B8A0]">Qty: {item.quantity}</span>
-                          <button
-                            onClick={() => removeItem(item.product.id)}
-                            className="text-red-400 hover:text-red-300 text-sm underline"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
+                ): (
+                    items.map((item) => {
+                    if (!item?.product) return null;
+                return (
+                <div key={item.product.id} className="flex gap-4 p-4 bg-[#3D2820]/50 rounded-lg border border-[#5A4034]/30">
+                  <div className="relative w-20 h-20 bg-[#1A0F0A] rounded-md overflow-hidden flex-shrink-0">
+                    <Image
+                      src={item.product.image}
+                      alt={item.product.name}
+                      fill
+                      className="object-contain p-2"
+                      unoptimized
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-[#F5E6D3]">{item.product.name}</h3>
+                    <p className="text-[#4F9C8F] font-bold">{item.product.price}</p>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-sm text-[#C9B8A0]">Qty: {item.quantity}</span>
+                      <button
+                        onClick={() => removeItem(item.product.id)}
+                        className="text-red-400 hover:text-red-300 text-sm underline"
+                      >
+                        Remove
+                      </button>
                     </div>
-                  ))
+                  </div>
+                </div>
+                ))
                 )}
               </div>
 

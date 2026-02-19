@@ -46,7 +46,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                 </div>
 
                 {/* Coffee Image */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
@@ -80,6 +80,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
                         {product.price}
                     </span>
                     <motion.button
+                        suppressHydrationWarning
                         whileHover={{ scale: 1.15 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={handleAddToCart}
