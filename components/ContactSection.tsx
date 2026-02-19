@@ -32,7 +32,7 @@ export default function ContactSection() {
                         Get in Touch
                     </h2>
                     <p className="text-[#C9B8A0] max-w-2xl mx-auto">
-                        Have questions about our blends? Want to partner with us? We'd love to hear from you.
+                        Have questions about our blends? Want to partner with us? We&apos;d love to hear from you.
                     </p>
                 </motion.div>
 

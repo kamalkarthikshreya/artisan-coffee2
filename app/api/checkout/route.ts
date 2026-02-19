@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { sendEmail, generateOrderConfirmationEmail } from '@/lib/email';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function POST(req: Request) {
     try {
         const body = await req.json();

@@ -14,12 +14,14 @@ function SuccessContent() {
 
     useEffect(() => {
         if (!sessionId) {
-            setStatus('error');
-            return;
+            // Avoid synchronous state updates in effect
+            const timer = setTimeout(() => setStatus('error'), 0);
+            return () => clearTimeout(timer);
         }
 
         async function verifyPayment() {
             try {
+                if (!sessionId) return;
                 const res = await fetch('/api/verify-stripe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -54,7 +56,7 @@ function SuccessContent() {
         return (
             <div className="text-center">
                 <h1 className="text-4xl font-['Playfair_Display'] font-bold text-red-500 mb-4">Something went wrong</h1>
-                <p className="text-[#C9B8A0] mb-8">We couldn't verify your payment. Please contact support.</p>
+                <p className="text-[#C9B8A0] mb-8">We couldn&apos;t verify your payment. Please contact support.</p>
                 <Link href="/checkout" className="text-[#D4A574] underline">Try Again</Link>
             </div>
         );
@@ -73,7 +75,7 @@ function SuccessContent() {
             </div>
             <h1 className="text-5xl font-['Playfair_Display'] font-bold text-[#F5E6D3] mb-6">Order Confirmed!</h1>
             <p className="text-[#C9B8A0] text-lg mb-8 max-w-md mx-auto">
-                Thank you for your purchase. We've sent a confirmation email with your order details.
+                Thank you for your purchase. We&apos;ve sent a confirmation email with your order details.
             </p>
             <Link href="/">
                 <button className="px-8 py-3 bg-gradient-to-r from-[#D4A574] to-[#B08968] text-[#1A0F0A] font-bold rounded-lg hover:shadow-lg transition-all">

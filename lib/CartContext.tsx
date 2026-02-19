@@ -40,6 +40,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           const parsed = JSON.parse(saved);
           // Sanitize: ensure items have valid product data
           const validItems = Array.isArray(parsed)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ? parsed.filter((i: any) => i && i.product && i.product.id)
             : [];
           setItems(validItems);
