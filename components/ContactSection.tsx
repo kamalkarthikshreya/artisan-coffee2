@@ -48,6 +48,7 @@ export default function ContactSection() {
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-[#C9B8A0] mb-2">Name</label>
                             <input
+                                suppressHydrationWarning
                                 type="text"
                                 id="name"
                                 required
@@ -58,6 +59,7 @@ export default function ContactSection() {
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-[#C9B8A0] mb-2">Email</label>
                             <input
+                                suppressHydrationWarning
                                 type="email"
                                 id="email"
                                 required
@@ -70,6 +72,7 @@ export default function ContactSection() {
                     <div className="mb-8">
                         <label htmlFor="message" className="block text-sm font-medium text-[#C9B8A0] mb-2">Message</label>
                         <textarea
+                            suppressHydrationWarning
                             id="message"
                             rows={4}
                             required
@@ -79,11 +82,12 @@ export default function ContactSection() {
                     </div>
 
                     <button
+                        suppressHydrationWarning
                         type="submit"
                         disabled={isSubmitting || status === 'success'}
                         className={`w-full py-4 rounded-lg font-bold text-[#1A0F0A] transition-all ${status === 'success'
-                                ? 'bg-green-500 cursor-default'
-                                : 'bg-gradient-to-r from-[#D4A574] to-[#B08968] hover:shadow-lg hover:shadow-[#D4A574]/20'
+                            ? 'bg-green-500 cursor-default'
+                            : 'bg-gradient-to-r from-[#D4A574] to-[#B08968] hover:shadow-lg hover:shadow-[#D4A574]/20'
                             }`}
                     >
                         {isSubmitting ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}

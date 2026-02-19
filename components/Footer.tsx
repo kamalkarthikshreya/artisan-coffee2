@@ -53,11 +53,13 @@ export default function Footer() {
                         <p className="text-sm">Subscribe for latest blends and offers.</p>
                         <form className="flex flex-col space-y-2" onSubmit={(e) => e.preventDefault()}>
                             <input
+                                suppressHydrationWarning
                                 type="email"
                                 placeholder="Enter your email"
                                 className="bg-[#1A0F0A] border border-[#2D1810] rounded px-4 py-2 text-sm focus:outline-none focus:border-[#D4A574] transition-colors"
                             />
                             <button
+                                suppressHydrationWarning
                                 type="submit"
                                 className="bg-[#D4A574] text-[#1A0F0A] font-bold py-2 rounded hover:bg-[#B08968] transition-colors text-sm"
                             >
