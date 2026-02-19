@@ -10,16 +10,7 @@ export interface EmailPayload {
 
 export async function sendEmail(payload: EmailPayload) {
   try {
-    // For development, log the email instead of sending
-    if (process.env.NODE_ENV === 'development') {
-      console.log('📧 Email would be sent:', {
-        to: payload.to,
-        subject: payload.subject,
-      });
-      return { success: true, message: 'Email logged (development mode)' };
-    }
-
-    // In production, integrate with real email service
+    // If credentials are present, try to send real email (even in dev)
     if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
       const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -36,7 +27,17 @@ export async function sendEmail(payload: EmailPayload) {
         html: payload.html,
       });
 
+      console.log(`✅ Email sent to ${payload.to}`);
       return { success: true, message: 'Email sent via Nodemailer' };
+    }
+
+    // For development without credentials, log the email
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📧 Email would be sent (No Credentials):', {
+        to: payload.to,
+        subject: payload.subject,
+      });
+      return { success: true, message: 'Email logged (development mode)' };
     }
 
     // Fallback if no credentials
