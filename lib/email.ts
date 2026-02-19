@@ -109,7 +109,16 @@ export function generateOrderConfirmationEmail(data: {
 }
 
 function getBaseUrl() {
-  if (process.env.NEXT_PUBLIC_BASE_URL) return process.env.NEXT_PUBLIC_BASE_URL;
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  // Priority 1: Vercel Production URL (Auto-generated)
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+
+  // Priority 2: Manual Base URL override (only if explicitly set)
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL;
+  }
+
+  // Priority 3: Localhost Fallback (Strictly 3000)
   return 'http://localhost:3000';
 }
