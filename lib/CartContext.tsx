@@ -85,6 +85,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const total = items.reduce((sum, item) => {
+    if (!item.product || !item.product.price) return sum;
     const price = parseFloat(item.product.price.replace('$', ''));
     return sum + price * item.quantity;
   }, 0);

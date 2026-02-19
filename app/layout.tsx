@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   description: 'Premium coffee for coffee lovers',
 };
 
+import { Inter, Playfair_Display } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
+
 export default function RootLayout({
   children,
 }: {
@@ -15,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#1A0F0A] text-[#F5E6D3]">
+      <body className={`${inter.variable} ${playfair.variable} bg-[#1A0F0A] text-[#F5E6D3]`}>
         <CartProvider>
           <Header />
           {children}
