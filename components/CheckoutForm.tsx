@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { CartItem } from '@/context/CartContext';
+import { CartItem } from '@/lib/CartContext';
 import { motion } from 'framer-motion';
 
 interface CheckoutFormProps {
