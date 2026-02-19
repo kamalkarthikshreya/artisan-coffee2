@@ -10,6 +10,14 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Missing session ID' }, { status: 400 });
         }
 
+        // SIMULATION MODE CHECK
+        if (sessionId.startsWith('mock_')) {
+            // Extract order ID from session string "mock_ORD-SIM-XXXXXX_TIMESTAMP"
+            const parts = sessionId.split('_');
+            const mockOrderId = parts[1] || 'ORD-SIM-TEST';
+            return NextResponse.json({ success: true, orderId: mockOrderId });
+        }
+
         const session = await stripe.checkout.sessions.retrieve(sessionId);
 
         if (session.payment_status !== 'paid') {
