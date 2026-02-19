@@ -37,4 +37,13 @@ body {
     background-clip: text;
     color: transparent;
   }
+
+  /* Force video to contain on very narrow screens if needed, or adjust height */
+  @media (max-width: 768px) {
+    .mobile-video-fix {
+      object-fit: cover;
+      /* Maintain cover but center it */
+      object-position: center;
+    }
+  }
 }

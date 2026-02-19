@@ -128,8 +128,9 @@ export default function HeroCanvasAnimation() {
                     playsInline
                     onCanPlayThrough={handleVideoLoad}
                     onError={handleVideoError}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover md:object-cover sm:object-cover mobile-video-fix"
                     poster="/coffee/hero-placeholder.svg"
+                    style={{ objectPosition: 'center' }}
                 >
                     <source src="/video/hero-coffee.mp4" type="video/mp4" />
                     {/* Fallback for older browsers */}

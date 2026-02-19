@@ -42,7 +42,7 @@ text-[#F5E6D3] mb-16"
                     Our Signature Blends
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 px-2 md:px-0">
                     {coffeeProducts.map((product, index) => (
                         <ProductCard key={product.id} product={product} index={index} />
                     ))}
