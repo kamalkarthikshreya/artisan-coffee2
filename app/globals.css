@@ -1,11 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* Base resets handled by Tailwind v4 automatically */
+
+:root {
+  --background: #1A0F0A;
+  --foreground: #F5E6D3;
 }
 
 html {
@@ -13,19 +17,24 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--background);
+  color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom Utilities using standard CSS to avoid @apply issues in mixed modes */
 @layer utilities {
   .glass {
-    @apply backdrop-blur-md bg-white/20;
+    backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.2);
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #c084fc, #ec4899, #ef4444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
