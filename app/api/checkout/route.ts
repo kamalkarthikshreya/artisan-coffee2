@@ -10,6 +10,17 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'No items in checkout' }, { status: 400 });
         }
 
+        if (!process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY.startsWith('sk_test_...')) {
+            throw new Error('Stripe Secret Key is missing or invalid in .env.local');
+        }
+
+        // Helper to format image URL for Stripe (must be absolute)
+        const getAbsoluteImageUrl = (imagePath: string) => {
+            if (imagePath.startsWith('http')) return imagePath;
+            const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+            return `${baseUrl}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+        };
+
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: items.map((item: any) => ({
@@ -17,7 +28,8 @@ export async function POST(req: Request) {
                     currency: 'usd',
                     product_data: {
                         name: item.product.name,
-                        images: [item.product.image],
+                        // Stripe requires valid public URLs. If localhost, we might need to skip images or use a placeholder
+                        images: [getAbsoluteImageUrl(item.product.image)],
                     },
                     unit_amount: Math.round(parseFloat(item.product.price.replace('$', '')) * 100),
                 },
