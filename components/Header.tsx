@@ -4,8 +4,41 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/lib/CartContext';
-import { ShoppingBag, X } from 'lucide-react';
 import Image from 'next/image';
+
+const ShoppingBagIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" /><path d="M3 6h18" /><path d="M16 10a4 4 0 0 1-8 0" />
+  </svg>
+);
+
+const XIcon = ({ size = 24, className = "" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M18 6 6 18" /><path d="m6 6 18 18" />
+  </svg>
+);
 
 export default function Header() {
   const { items, removeItem, total } = useCart();
@@ -57,7 +90,7 @@ export default function Header() {
             onClick={() => setIsCartOpen(true)}
             className="relative p-2 text-[#F5E6D3] hover:text-[#D4A574] transition-colors"
           >
-            <ShoppingBag size={24} />
+            <ShoppingBagIcon size={24} />
             {cartCount > 0 && (
               <motion.span
                 initial={{ scale: 0 }}
@@ -95,7 +128,7 @@ export default function Header() {
                   onClick={() => setIsCartOpen(false)}
                   className="text-[#C9B8A0] hover:text-white transition-colors"
                 >
-                  <X size={24} />
+                  <XIcon size={24} />
                 </button>
               </div>
 
