@@ -97,7 +97,7 @@ export default function HeroCanvasAnimation() {
     );
 
     return (
-        <div ref={containerRef} className="relative h-screen w-full overflow-hidden bg-[#1A0F0A]">
+        <div ref={containerRef} className="relative h-[100dvh] w-full overflow-hidden bg-[#1A0F0A]">
             {/* Loading Screen */}
             {!videoLoaded && (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#1A0F0A]">
