@@ -21,10 +21,11 @@ export async function sendEmail(payload: EmailPayload) {
       });
 
       await transporter.sendMail({
-        from: process.env.CONTACT_EMAIL || 'orders@artisancoffee.com',
+        from: `"Artisan Coffee" <${process.env.GMAIL_USER}>`, // Explicitly set Sender Name
         to: payload.to,
         subject: payload.subject,
         html: payload.html,
+        replyTo: process.env.CONTACT_EMAIL || process.env.GMAIL_USER, // Allow meaningful replies
       });
 
       console.log(`✅ Email sent to ${payload.to}`);
