@@ -84,6 +84,7 @@ export default function HeroCanvasAnimation() {
                 </p>
             ) : (
                 <motion.button
+                    suppressHydrationWarning
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="mt-4 rounded-full bg-gradient-to-r from-[#4F9C8F] to-[#3D8B7F] px-10 py-5 text-xl font-semibold text-white shadow-2xl hover:shadow-[#4F9C8F]/40 transition-shadow"
