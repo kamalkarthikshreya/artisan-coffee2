@@ -7,19 +7,7 @@ import Link from 'next/link';
 import CheckoutForm from '@/components/CheckoutForm';
 
 export default function CheckoutPage() {
-  const { items, total, clearCart } = useCart();
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    customerName: '',
-    email: '',
-    phone: '',
-    deliveryAddress: '',
-    city: '',
-    postalCode: '',
-    notes: '',
-  });
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'error' | ''>('');
+  const { items, total } = useCart();
 
   if (items.length === 0) {
     return (
@@ -40,49 +28,6 @@ export default function CheckoutPage() {
       </main>
     );
   }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setMessage('');
-
-    try {
-      const orderData = {
-        ...formData,
-        items: items.map((item) => ({
-          productId: item.product.id,
-          productName: item.product.name,
-          quantity: item.quantity,
-          price: item.product.price,
-        })),
-        totalPrice: parseFloat(total.toFixed(2)),
-      };
-
-      const response = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create order');
-      }
-
-      await response.json();
-      setMessageType('success');
-      setMessage('Order placed successfully!');
-      clearCart();
-
-      setTimeout(() => {
-        window.location.href = '/orders';
-      }, 2000);
-    } catch (error) {
-      setMessageType('error');
-      setMessage(error instanceof Error ? error.message : 'Failed to place order');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <main className="min-h-screen bg-[#1A0F0A] py-20 px-4 md:px-8">
