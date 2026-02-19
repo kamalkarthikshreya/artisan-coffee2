@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendEmail, generateOrderConfirmationEmail } from '@/lib/email';
-import { stripHtml } from 'string-strip-html';
+
 
 export async function POST(req: Request) {
     try {
