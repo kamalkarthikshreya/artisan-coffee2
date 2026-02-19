@@ -37,11 +37,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 ### Environment Variables
 When deploying to Vercel, make sure to add the following Environment Variables in the Project Settings:
 
+- `MONGODB_URI`: Your MongoDB Connection String (e.g., `mongodb+srv://user:pass@cluster...`)
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Your Stripe Public Key (starts with `pk_test_...` or `pk_live_...`)
 - `STRIPE_SECRET_KEY`: Your Stripe Secret Key (starts with `sk_test_...` or `sk_live_...`)
 - `GMAIL_USER`: Your Gmail address (e.g., `kamalkarthik88615@gmail.com`)
 - `GMAIL_APP_PASSWORD`: Your Gmail App Password (16 characters, no spaces)
 - `CONTACT_EMAIL`: The email where you want to receive order notifications (e.g., `kamalkarthik88615@gmail.com`)
-- `NEXT_PUBLIC_BASE_URL`: The URL of your deployed site (e.g., `https://your-project.vercel.app`) - *Note: Vercel sets `NEXT_PUBLIC_VERCEL_URL` automatically, but setting this manually is good practice.*
+- `NEXT_PUBLIC_BASE_URL`: The URL of your deployed site (e.g., `https://your-project.vercel.app`)
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
